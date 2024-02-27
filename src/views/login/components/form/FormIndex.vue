@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import formBoard from './FormBoard.vue';
+import formCon from './FormCon.vue';
+import { signInConfig } from '../config/formConfig';
 </script>
 <template>
   <div class="container">
     <div class="left">
       <formBoard />
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <formCon :config="signInConfig" />
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -24,6 +28,10 @@ import formBoard from './FormBoard.vue';
     justify-content: center;
     align-items: center;
     background: linear-gradient(#8f5ae0, #ad8ce2);
+  }
+  .right {
+    flex-grow: 1;
+    height: 100%;
   }
 }
 </style>

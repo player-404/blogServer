@@ -1,38 +1,30 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import Typed from 'typed.js';
-const word = ref<string>('不傲才以骄人，不以宠而作威');
-const botRef = ref<Element | null>(null);
-const useTyped = () => {
-  new Typed('#bot', {
-    stringsElement: 'dasdas',
-    loop: true,
-    typeSpeed: 30,
-    backSpeed: 30
-  });
-};
-onMounted(() => {
-  useTyped();
-});
+import { ref } from 'vue';
+const word = ref<string>('准备做什么呢?');
 </script>
 <template>
   <div class="board">
     <div class="top"></div>
-    <div class="bot" id="bot" ref="botRef"></div>
+    <div class="bot">{{ word }}</div>
   </div>
 </template>
 <style lang="scss" scoped>
 .board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .top {
     width: 200px;
     height: 200px;
-    background: url('@/assets/signInbg.png') no-repeat center center;
+    background: url('@/assets/imgs/signInbg.png') no-repeat center center;
     background-size: cover;
   }
   .bot {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
     color: #fff;
+    padding-top: 20px;
   }
 }
 </style>

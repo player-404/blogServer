@@ -3,7 +3,7 @@ import FormCom from './form/FormIndex.vue';
 import { ref, onMounted } from 'vue';
 
 const show = ref<boolean>(true);
-let timer: number | undefined;
+let timer: number | undefined = undefined;
 // 自动隐藏
 const autoHide = () => {
   if (timer) {
@@ -33,8 +33,8 @@ onMounted(() => {
 </template>
 <style lang="scss" scoped>
 .login-con {
-  width: 800px;
-  height: 440px;
+  width: 840px;
+  height: 480px;
   background-color: #fff;
   position: absolute;
   top: 50%;
