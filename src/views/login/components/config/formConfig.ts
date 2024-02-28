@@ -17,6 +17,17 @@ export const signInConfig: SignIn = {
   username: true,
   pass: true
 };
+
+// 注册总表单配置
+export const signUpConfig: SignIn = {
+  title: '注册',
+  username: true,
+  pass: true,
+  confirmPass: true,
+  phone: true
+};
+
+//  下面是单个输入框的配置
 // 用户名输入框配置
 export const userIptConfig: Ipt = {
   name: 'username',
