@@ -20,6 +20,9 @@ import WelText from './components/WelText.vue';
   width: 100%;
   height: 100%;
   background-color: #dfd5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .text {
     position: absolute;
     top: 50%;

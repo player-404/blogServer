@@ -8,10 +8,14 @@ import {
   verifyCodeConfig
 } from '../config/formConfig';
 import { computed } from 'vue';
+import { useIptFocusStore } from '@/stores/iptFocus';
 import { type SignIn } from '../config/formConfig';
+
+// 表单配置文件
 const fig = defineProps<{
   config: SignIn;
 }>();
+const { focus, blur } = useIptFocusStore();
 
 const form = computed(() => {
   const signInForm = {
@@ -33,21 +37,47 @@ const form = computed(() => {
 const getCode = () => {
   console.log('获取验证码');
 };
+
+// 输入框聚焦
+const iptFocus = () => {
+  focus();
+};
+// 输入框失焦
+const iptBlur = () => {
+  blur();
+};
 </script>
 <template>
   <div class="containers">
     <div class="form">
       <div class="title">{{ config.title }}</div>
       <!-- 用户名 -->
-      <ZpInput :config="userIptConfig" v-if="config.username" v-model="form.username" />
+      <ZpInput
+        :config="userIptConfig"
+        v-if="config.username"
+        v-model="form.username"
+        @focus="iptFocus"
+        @blur="iptBlur"
+      />
       <!-- 密码 -->
-      <ZpInput :config="passIptConfig" v-if="config.pass" v-model="form.password" />
+      <ZpInput
+        :config="passIptConfig"
+        v-if="config.pass"
+        @focus="iptFocus"
+        @blur="iptBlur"
+        v-model="form.password"
+      />
       <!-- 确认密码 -->
-      <ZpInput :config="confirmPassConfig" v-if="config.confirmPass" />
+      <ZpInput
+        :config="confirmPassConfig"
+        @focus="iptFocus"
+        @blur="iptBlur"
+        v-if="config.confirmPass"
+      />
       <!-- 手机号码 -->
-      <ZpInput :config="phoneConfig" v-if="config.phone" />
+      <ZpInput :config="phoneConfig" @focus="iptFocus" @blur="iptBlur" v-if="config.phone" />
       <!-- 验证码 -->
-      <ZpInput :config="verifyCodeConfig" v-if="config.phone" />
+      <ZpInput :config="verifyCodeConfig" @focus="iptFocus" @blur="iptBlur" v-if="config.phone" />
       <!-- 按钮 -->
       <el-button class="submit" color="#905CE0">{{ config.title }}</el-button>
     </div>

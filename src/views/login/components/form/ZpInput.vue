@@ -11,9 +11,16 @@ interface Config {
 defineProps<{
   config?: Config;
 }>();
+const emit = defineEmits(['focus', 'blur']);
 
 const model = defineModel();
 const { click, btnActive, text } = useGetVerifyCode();
+const focus = () => {
+  emit('focus', 'focus');
+};
+const blur = () => {
+  emit('blur', blur);
+};
 </script>
 <template>
   <div class="zp-con">
@@ -23,6 +30,8 @@ const { click, btnActive, text } = useGetVerifyCode();
         :type="config?.type || 'text'"
         :style="{ height: config?.height || '30px', width: config?.width ?? '100%' }"
         v-model="model"
+        @focus="focus"
+        @blur="blur"
       />
       <el-button
         class="btn"

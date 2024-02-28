@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import FormCom from './form/FormIndex.vue';
 import { ref, onMounted } from 'vue';
+import { useIptFocusStore } from '@/stores/iptFocus';
+import { storeToRefs } from 'pinia';
 
+// 登录表单展示状态
 const show = ref<boolean>(true);
+// 定时器
 let timer: number | undefined = undefined;
+//表单输入框 sotre
+const { status } = storeToRefs(useIptFocusStore());
+
 // 自动隐藏
 const autoHide = () => {
   if (timer) {
@@ -20,7 +27,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="login-con">
+  <div class="login-con" :class="{ scales: status }">
     <slot :show="show"></slot>
     <Transition
       enter-active-class="animate__animated animate__fadeIn"
@@ -36,13 +43,24 @@ onMounted(() => {
   width: 840px;
   height: 480px;
   background-color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index: 9;
   border-radius: 20px;
   border: 15px solid rgba(227, 220, 247, 0.9);
   overflow: hidden;
+  &.scales {
+    animation: scale 0.3s;
+  }
+}
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
