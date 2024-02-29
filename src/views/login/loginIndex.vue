@@ -2,8 +2,6 @@
 import Wg from './components/WelcomBg.vue';
 import LoginCon from './components/LoginBox.vue';
 import WelText from './components/WelText.vue';
-import { reactive } from 'vue';
-import bg from '@/assets/imgs/bg.png';
 </script>
 <template>
   <div class="container">
