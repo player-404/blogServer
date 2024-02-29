@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-const word = ref<string>('准备做什么呢?');
+import { reactive } from 'vue';
+const props = defineProps({
+  word: {
+    type: String,
+    default: '准备做什么呢?'
+  },
+  url: {
+    type: String,
+    required: true
+  }
+});
+const style = reactive({
+  backgroundImage: `url(${props.url})`
+});
 </script>
 <template>
   <div class="board">
-    <div class="top"></div>
-    <div class="bot">{{ word }}</div>
+    <div class="top" :style="style"></div>
+    <div class="bot">{{ word ?? '准备做点什么呢?' }}</div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,10 +26,11 @@ const word = ref<string>('准备做什么呢?');
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
   .top {
     width: 200px;
     height: 200px;
-    background: url('@/assets/imgs/signInbg.png') no-repeat center center;
+    background: no-repeat center center;
     background-size: cover;
   }
   .bot {

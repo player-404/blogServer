@@ -46,7 +46,8 @@ onMounted(() => {
   position: relative;
   z-index: 9;
   border-radius: 20px;
-  border: 15px solid rgba(227, 220, 247, 0.9);
+  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.3);
+  // border: 15px solid rgba(227, 220, 247, 0.6);
   overflow: hidden;
   &.scales {
     animation: scale 0.3s;

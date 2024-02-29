@@ -2,6 +2,8 @@
 import Wg from './components/WelcomBg.vue';
 import LoginCon from './components/LoginBox.vue';
 import WelText from './components/WelText.vue';
+import { reactive } from 'vue';
+import bg from '@/assets/imgs/bg.png';
 </script>
 <template>
   <div class="container">
@@ -19,10 +21,11 @@ import WelText from './components/WelText.vue';
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #dfd5f5;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: contain;
+  background: no-repeat center center;
   .text {
     position: absolute;
     top: 50%;

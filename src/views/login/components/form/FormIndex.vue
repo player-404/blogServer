@@ -4,6 +4,8 @@ import formCon from './FormCon.vue';
 import { signInConfig, signUpConfig } from '../config/formConfig';
 import { useFormType } from '@/stores/formType';
 import { storeToRefs } from 'pinia';
+import signInBg from '@/assets/imgs/signInbg.png';
+import signUpBg from '@/assets/imgs/signUpBg.png';
 
 const { status } = storeToRefs(useFormType());
 const switchForm = (type: boolean) => {
@@ -13,7 +15,13 @@ const switchForm = (type: boolean) => {
 <template>
   <div class="container">
     <div class="left">
-      <formBoard />
+      <Transition
+        enter-active-class="animate__animated animate__bounceInLeft"
+        leave-active-class="animate__animated animate__bounceOutRight"
+      >
+        <formBoard :url="signInBg" v-if="!status" />
+        <formBoard :url="signUpBg" word="加入我们吧！" v-else />
+      </Transition>
     </div>
     <div class="right">
       <Transition
@@ -35,7 +43,6 @@ const switchForm = (type: boolean) => {
   display: flex;
   position: absolute;
   left: 0;
-  top: 0;
   .left {
     width: 50%;
     height: 100%;
@@ -43,6 +50,8 @@ const switchForm = (type: boolean) => {
     justify-content: center;
     align-items: center;
     background: linear-gradient(#8f5ae0, #ad8ce2);
+    overflow: hidden;
+    position: relative;
   }
   .right {
     flex-grow: 1;
