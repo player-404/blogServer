@@ -5,7 +5,7 @@ root = true
 
 # Unix-style newlines with a newline ending every file
 [*]
-# 追定 换行是回车符还是换行符 win使用回车符(crlf) mac,linux使用换行符(lf), 根据不同平台设置相应值
+# 决定 换行是回车符还是换行符 win使用回车符(crlf) mac,linux使用换行符(lf), 根据不同平台设置相应值
 end_of_line = crlf
 insert_final_newline = true
 

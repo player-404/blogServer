@@ -4,6 +4,7 @@ export interface SignIn {
   pass?: boolean;
   confirmPass?: boolean;
   phone?: boolean;
+  showHead?: boolean;
 }
 
 interface Ipt extends SignIn {
@@ -15,16 +16,17 @@ interface Ipt extends SignIn {
 export const signInConfig: SignIn = {
   title: '登录',
   username: true,
-  pass: true
+  pass: true,
+  showHead: true
 };
-
 // 注册总表单配置
 export const signUpConfig: SignIn = {
   title: '注册',
   username: true,
   pass: true,
   confirmPass: true,
-  phone: true
+  phone: true,
+  showHead: false
 };
 
 //  下面是单个输入框的配置

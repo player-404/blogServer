@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import formBoard from './FormBoard.vue';
+import SignUpForm from './SignUpForm.vue';
 import formCon from './FormCon.vue';
-import { signInConfig, signUpConfig } from '../config/formConfig';
+import { signInConfig } from '../config/formConfig';
 import { useFormType } from '@/stores/formType';
 import { storeToRefs } from 'pinia';
 import signInBg from '@/assets/imgs/signInbg.png';
 import signUpBg from '@/assets/imgs/signUpBg.png';
 
 const { status } = storeToRefs(useFormType());
-const switchForm = (type: boolean) => {
-  status.value = type;
-};
+// const switchForm = (type: boolean) => {
+//   status.value = type;
+// };
 </script>
 <template>
   <div class="container">
@@ -29,9 +30,9 @@ const switchForm = (type: boolean) => {
         leave-active-class="animate__animated animate__bounceOutLeft"
       >
         <!-- 登录表单 -->
-        <formCon v-if="!status" :config="signInConfig" @switch="switchForm" />
+        <formCon v-if="!status" :config="signInConfig" />
         <!-- 注册表单 -->
-        <formCon v-else :config="signUpConfig" @switch="switchForm" />
+        <SignUpForm v-else />
       </Transition>
     </div>
   </div>

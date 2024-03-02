@@ -40,8 +40,8 @@ onMounted(() => {
 </template>
 <style lang="scss" scoped>
 .login-con {
-  width: 860px;
-  height: 500px;
+  width: 900px;
+  height: 540px;
   background-color: #fff;
   position: relative;
   z-index: 9;

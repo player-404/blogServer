@@ -7,12 +7,17 @@ import './assets/base.css';
 
 import App from './App.vue';
 import router from './router';
-import VueTypedJs from 'vue-typed-js';
+
+// fontaswome icon
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 const app = createApp(App);
 
+library.add(faEye, faEyeSlash);
+app.component('font-awesome-icon', FontAwesomeIcon);
+
 app.use(createPinia());
 app.use(router);
-app.use(VueTypedJs);
-
 app.mount('#app');

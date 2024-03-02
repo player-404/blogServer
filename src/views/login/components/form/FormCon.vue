@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, reactive } from 'vue';
 
 import ZpInput from './ZpInput.vue';
 import SwitchLink from './SwitchLink.vue';
@@ -22,27 +22,27 @@ const fig = defineProps<{
 const { status } = storeToRefs(useFormType());
 // 输入框的 store
 const { focus, blur } = useIptFocusStore();
-const { updateType } = useFormType();
+// const { updateType } = useFormType();
 
 const form = computed(() => {
-  const signInForm = {
+  const signInForm = reactive({
     username: '',
     password: ''
-  };
-  const signUpForm = {
+  });
+  const signUpForm = reactive({
     username: '',
     password: '',
     confirmPass: '',
     phone: undefined,
     code: undefined
-  };
+  });
 
   return fig.config.confirmPass ? signUpForm : signInForm;
 });
 
-watch(status, (newv) => {
-  updateType(newv);
-});
+// watch(status, (newv) => {
+//   updateType(newv);
+// });
 // 发送获取验证码请求
 const getCode = () => {
   console.log('获取验证码');
@@ -69,7 +69,10 @@ const mouseup = () => {
 <template>
   <div class="containers">
     <div class="form">
-      <div class="title">{{ config.title }}</div>
+      <!-- 头 -->
+      <slot v-if="config.showHead">
+        <div class="title">{{ config.title }}</div>
+      </slot>
       <!-- 用户名 -->
       <ZpInput
         :config="userIptConfig"
