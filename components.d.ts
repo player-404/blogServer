@@ -7,10 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElButton: (typeof import('element-plus/es'))['ElButton'];
-    ElStep: (typeof import('element-plus/es'))['ElStep'];
-    ElSteps: (typeof import('element-plus/es'))['ElSteps'];
-    RouterLink: (typeof import('vue-router'))['RouterLink'];
-    RouterView: (typeof import('vue-router'))['RouterView'];
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElResult: typeof import('element-plus/es')['ElResult']
+    ElStep: typeof import('element-plus/es')['ElStep']
+    ElSteps: typeof import('element-plus/es')['ElSteps']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

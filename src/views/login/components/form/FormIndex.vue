@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import formBoard from './FormBoard.vue';
 import SignUpForm from './SignUpForm.vue';
-import formCon from './FormCon.vue';
+import SignInForm from './SignInForm.vue';
 import { signInConfig } from '../config/formConfig';
 import { useFormType } from '@/stores/formType';
 import { storeToRefs } from 'pinia';
@@ -29,8 +29,7 @@ const { status } = storeToRefs(useFormType());
         enter-active-class="animate__animated animate__bounceInRight"
         leave-active-class="animate__animated animate__bounceOutLeft"
       >
-        <!-- 登录表单 -->
-        <formCon v-if="!status" :config="signInConfig" />
+        <SignInForm v-if="!status" :config="signInConfig" />
         <!-- 注册表单 -->
         <SignUpForm v-else />
       </Transition>

@@ -1,5 +1,5 @@
 export interface SignIn {
-  title: string;
+  title?: string;
   username?: boolean;
   pass?: boolean;
   confirmPass?: boolean;
@@ -19,12 +19,16 @@ export const signInConfig: SignIn = {
   pass: true,
   showHead: true
 };
-// 注册总表单配置
-export const signUpConfig: SignIn = {
+// 注册表单基本信息配置
+export const signUpInfoConfig: SignIn = {
   title: '注册',
   username: true,
   pass: true,
   confirmPass: true,
+  showHead: false
+};
+// 注册表单手机号验证表单配置
+export const signUpPhoneConfig: SignIn = {
   phone: true,
   showHead: false
 };
@@ -37,13 +41,13 @@ export const userIptConfig: Ipt = {
 };
 // 密码输入框配置
 export const passIptConfig: Ipt = {
-  name: 'pass',
+  name: 'password',
   title: '密码',
   type: 'password'
 };
 // 确认密码输入框配置
 export const confirmPassConfig: Ipt = {
-  name: 'passConfim',
+  name: 'confirmPassword',
   title: '确认密码',
   type: 'password'
 };
