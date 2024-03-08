@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useGetVerifyCode } from '@/utils/button';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import type { Rule } from '@/types/formType';
 import { useFormDataStore } from '@/stores/formData';
 import { storeToRefs } from 'pinia';
@@ -18,22 +18,32 @@ interface Config {
 const props = defineProps<{
   config: Config;
   rule?: RegExp;
+  message?: string;
 }>();
 // 表单数据
 const { signUpFormData } = storeToRefs(useFormDataStore());
 // 验证规则
-const defaultRules: Record<string, Rule> = {
+const defaultRules: Record<string, Rule> = reactive({
   // 用户名正则
-  username: { required: true, message: '请输入用户名' },
+  username: {
+    required: true,
+    message: props.message ?? '请输入用户名',
+    requiredErrorMessage: '请输入用户名',
+    errTip: ''
+  },
   // 密码正则
   password: {
     required: true,
-    message: '须包含大小写字母，数字，特殊符号中任意3项',
+    errTip: '',
+    message: props.message ?? '须包含大小写字母，数字，特殊符号中任意3项',
+    requiredErrorMessage: '请输入密码',
     rule: /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\W_!@#$%^&*`~()-+=]+$)(?![0-9\W_!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\W_!@#$%^&*`~()-+=]/
   },
   confirmPassword: {
     required: true,
-    message: '两次密码输入不一致',
+    errTip: '',
+    message: props.message ?? '两次密码输入不一致',
+    requiredErrorMessage: '请输入确认密码',
     rule: (password: string, confirmPassword: string) => {
       if (!password || !confirmPassword) return false;
       return password === confirmPassword;
@@ -41,15 +51,25 @@ const defaultRules: Record<string, Rule> = {
   },
   phone: {
     required: true,
-    message: '手机号不正确',
+    message: props.message ?? '手机号不正确',
+    errTip: '',
+    requiredErrorMessage: '请输入手机号',
     rule: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/
+  },
+  verifyCode: {
+    required: true,
+    message: props.message ?? '验证码不正确',
+    errTip: '',
+    requiredErrorMessage: '请输入验证码',
+    rule: (code, iptCode) => code === iptCode
   }
-};
+});
+
 // 与父组件数据的双向绑定
 const model = defineModel();
 const emit = defineEmits(['focus', 'blur', 'input']);
 // 手机验证码按钮相关功能
-const { click, btnActive, text } = useGetVerifyCode();
+const { click, btnActive, text, code } = useGetVerifyCode();
 // 表单类型（注册/登录）
 const iptType = ref(props.config?.type);
 // 输入框验证状态
@@ -79,7 +99,8 @@ const verify = (rule?: RegExp) => {
   // 检查是否必须输入值
   if (defaultRules[props.config?.name].required && !model.value) {
     verifyStatus.value = false;
-    defaultRules[props.config?.name].message = '请输入' + props.config?.title;
+    console.log('输入的值为空啦');
+    defaultRules[props.config?.name].errTip = defaultRules[props.config?.name].requiredErrorMessage;
     return;
   }
   // 获取输入框验证规则，传递了自定义规则使用自定义规则，否则使用默认规则
@@ -89,7 +110,8 @@ const verify = (rule?: RegExp) => {
     verifyStatus.value = true;
     return;
   }
-  console.log(1111);
+  defaultRules[props.config?.name].errTip = defaultRules[props.config?.name].message;
+  console.log('err', defaultRules[props.config?.name].errTip);
   // 确认密码与密码是否一致验证
   if (props.config?.name === 'confirmPassword') {
     const password = signUpFormData.value.password;
@@ -100,7 +122,14 @@ const verify = (rule?: RegExp) => {
     );
     return;
   }
-
+  // 验证码验证
+  if (props.config?.name === 'verifyCode') {
+    verifyStatus.value = (iptRule as (code?: string, iptCode?: string) => boolean)(
+      code.value,
+      model.value as string
+    );
+    return;
+  }
   //其他验证
   verifyStatus.value = (iptRule as RegExp).test(model.value as string);
 };
@@ -111,6 +140,7 @@ const verify = (rule?: RegExp) => {
     <div class="ipt">
       <input
         v-model="model"
+        :class="{ error: !verifyStatus }"
         :style="{ height: config?.height || '30px', width: config?.width ?? '100%' }"
         :type="iptType ?? 'text'"
         @blur="blur(rule)"
@@ -145,12 +175,12 @@ const verify = (rule?: RegExp) => {
         leave-active-class="animate__animated animate__fadeOut"
       >
         <p v-if="!verifyStatus" class="error-tip text-ellipsis">
-          {{ defaultRules[config?.name as string].message }}
+          {{ defaultRules[config?.name as string].errTip }}
         </p>
       </Transition>
       <el-button
         v-if="config?.name === 'phone'"
-        :disabled="!btnActive"
+        :disabled="!btnActive || !verifyStatus"
         class="btn"
         color="#905CE0"
         @click="click"
