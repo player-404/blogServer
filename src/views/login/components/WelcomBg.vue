@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 const { show } = defineProps(['show']);
 </script>
 <template>
   <Transition leave-active-class="animate__animated animate__fadeOut">
-    <div class="circle-container" v-if="show">
+    <div v-if="show" class="circle-container">
       <div class="one-circle circle"></div>
       <div class="two-circle circle"></div>
       <div class="three-circle circle"></div>
@@ -16,9 +16,11 @@ const { show } = defineProps(['show']);
   height: 100%;
   position: relative;
   filter: blur(70px);
+
   .text-container {
     position: absolute;
   }
+
   .circle {
     width: 100px;
     height: 100px;
@@ -30,19 +32,23 @@ const { show } = defineProps(['show']);
     margin-left: -100px;
     opacity: 0;
   }
+
   .one-circle {
     background: #ff6347;
-    box-shadow: 0px 0px 20px #ff6347;
+    box-shadow: 0 0 20px #ff6347;
     z-index: 4;
     animation: fade-in 3s linear infinite;
   }
+
   .two-circle {
     background: #007fff;
     margin-top: -30px;
     box-shadow: 0px 0px 20px #007fff;
+
     z-index: 3;
     animation: fade-in 3s 1s linear infinite;
   }
+
   .three-circle {
     background: #ffa500;
     margin-top: -90px;
@@ -50,6 +56,7 @@ const { show } = defineProps(['show']);
     animation: fade-in 3s 2s linear infinite;
     box-shadow: 0px 0px 20px #ffa500;
   }
+
   @keyframes fade-in {
     0% {
       opacity: 0;

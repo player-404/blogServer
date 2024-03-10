@@ -4,7 +4,7 @@ import { createPinia } from 'pinia';
 import './assets/normalize.css';
 import 'animate.css';
 import './assets/base.css';
-
+import 'element-plus/es/components/notification/style/css';
 import App from './App.vue';
 import router from './router';
 

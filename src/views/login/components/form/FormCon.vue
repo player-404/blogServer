@@ -13,8 +13,11 @@ import {
 import { type key } from '@/types/utils';
 import { useIptFocusStore } from '@/stores/iptFocus';
 import { useFormType } from '@/stores/formType';
+import { verifyForm } from '@/utils/iptVerify';
 import { useFormDataStore } from '@/stores/formData';
 import { storeToRefs } from 'pinia';
+import { ref, type VNodeRef } from 'vue';
+import { ElNotification } from 'element-plus';
 
 // 表单配置
 const fig = defineProps<{
@@ -27,12 +30,7 @@ const { updateSignInData, updateSignUpData, updateStep } = useFormDataStore();
 // 输入框的 store
 const { focus, blur } = useIptFocusStore();
 // const { updateType } = useFormType();
-
-// 发送获取验证码请求
-const getCode = () => {
-  console.log('获取验证码');
-};
-
+const iptRef = ref<VNodeRef[]>([]);
 // 输入框聚焦
 const iptFocus = () => {
   focus();
@@ -42,14 +40,6 @@ const iptBlur = () => {
   blur();
 };
 
-// 按钮按下
-const mousedown = () => {
-  blur();
-};
-// 按钮弹起
-const mouseup = () => {
-  focus();
-};
 // 输入框数据更新到 store
 const input = (val: string, key: key) => {
   if (status.value) {
@@ -66,9 +56,24 @@ const pre = () => {
 };
 // 注册下一步
 const next = () => {
-  if (step.value > 3) return;
-  const steps = step.value + 1;
-  updateStep(steps);
+  // 下一步  表单（输入项）的验证
+  if (verifyForm(iptRef)) {
+    console.log('牛逼');
+    // 下一步 切换表单
+    if (step.value > 3) return;
+    const steps = step.value + 1;
+    updateStep(steps);
+  } else {
+    ElNotification({ title: '验证失败', message: '表单有误, 请检查你的输入项', type: 'error' });
+  }
+};
+// 提交表单
+const submit = () => {
+  if (verifyForm(iptRef)) {
+    console.log('牛逼');
+  } else {
+    ElNotification({ title: '登录失败', message: '表单有误, 请检查你的输入项', type: 'error' });
+  }
 };
 </script>
 <template>
@@ -81,6 +86,11 @@ const next = () => {
       <!-- 用户名 -->
       <ZpInput
         v-if="config.username"
+        :ref="
+          (el: any) => {
+            iptRef.push(el);
+          }
+        "
         :config="userIptConfig"
         @blur="iptBlur"
         @focus="iptFocus"
@@ -89,6 +99,11 @@ const next = () => {
       <!-- 密码 -->
       <ZpInput
         v-if="config.pass"
+        :ref="
+          (el: any) => {
+            iptRef.push(el);
+          }
+        "
         :config="passIptConfig"
         @blur="iptBlur"
         @focus="iptFocus"
@@ -97,6 +112,11 @@ const next = () => {
       <!-- 确认密码 -->
       <ZpInput
         v-if="config.confirmPass"
+        :ref="
+          (el: any) => {
+            iptRef.push(el);
+          }
+        "
         :config="confirmPassConfig"
         @blur="iptBlur"
         @focus="iptFocus"
@@ -105,6 +125,11 @@ const next = () => {
       <!-- 手机号码 -->
       <ZpInput
         v-if="config.phone"
+        :ref="
+          (el: any) => {
+            iptRef.push(el);
+          }
+        "
         :config="phoneConfig"
         @blur="iptBlur"
         @focus="iptFocus"
@@ -113,13 +138,18 @@ const next = () => {
       <!-- 验证码 -->
       <ZpInput
         v-if="config.phone"
+        :ref="
+          (el: any) => {
+            iptRef.push(el);
+          }
+        "
         :config="verifyCodeConfig"
         @blur="iptBlur"
         @focus="iptFocus"
         @input="input"
       />
       <!-- 按钮 -->
-      <SubmitBtn :config="config" :step="step" @next="next" @pre="pre" />
+      <SubmitBtn :config="config" :step="step" @next="next" @pre="pre" @submit="submit" />
       <!-- 忘记密码等链接按钮 -->
       <div class="tip">
         <el-button v-if="!status" class="forget" link size="small">忘记密码?</el-button>

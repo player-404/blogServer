@@ -111,7 +111,6 @@ const verify = (rule?: RegExp) => {
     return;
   }
   defaultRules[props.config?.name].errTip = defaultRules[props.config?.name].message;
-  console.log('err', defaultRules[props.config?.name].errTip);
   // 确认密码与密码是否一致验证
   if (props.config?.name === 'confirmPassword') {
     const password = signUpFormData.value.password;
@@ -133,6 +132,12 @@ const verify = (rule?: RegExp) => {
   //其他验证
   verifyStatus.value = (iptRule as RegExp).test(model.value as string);
 };
+
+defineExpose({
+  verify,
+  verifyStatus,
+  name: props.config?.name
+});
 </script>
 <template>
   <div class="zp-con">

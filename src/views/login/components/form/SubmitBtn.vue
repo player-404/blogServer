@@ -1,12 +1,24 @@
 <script lang="ts" setup>
 import { useFormType } from '@/stores/formType';
+import { useIptFocusStore } from '@/stores/iptFocus';
 
 defineProps(['config', 'step']);
-const emit = defineEmits(['pre', 'next']);
+const emit = defineEmits(['pre', 'next', 'submit']);
 const { status } = useFormType();
+const { focus, blur } = useIptFocusStore();
 
+// 按钮按下
+const mouseDown = () => {
+  blur();
+};
+// 按钮弹起
+const mouseUp = () => {
+  focus();
+};
 // 登录
-const submit = () => {};
+const submit = () => {
+  emit('submit');
+};
 // 注册上一步
 const preStep = () => {
   emit('pre');
@@ -19,8 +31,15 @@ const nextStep = () => {
 <template>
   <div class="btn">
     <!--    登录按钮-->
-    <el-button v-if="!status" class="sub-btn" color="#905ce0" @click="submit"
-      >{{ config.title }}
+    <el-button
+      v-if="!status"
+      class="sub-btn"
+      color="#905ce0"
+      @click="submit"
+      @mousedown="mouseDown"
+      @mouseup="mouseUp"
+    >
+      {{ config.title }}
     </el-button>
     <!--    注册按钮-->
     <div v-else class="sign-up-btn">
@@ -30,9 +49,17 @@ const nextStep = () => {
         color="#905ce0"
         style="width: 40%"
         @click="preStep"
+        @mousedown="mouseDown"
+        @mouseup="mouseUp"
         >上一步
       </el-button>
-      <el-button class="next-step" color="#905ce0" style="width: 40%" @click="nextStep"
+      <el-button
+        class="next-step"
+        color="#905ce0"
+        style="width: 40%"
+        @click="nextStep"
+        @mousedown="mouseDown"
+        @mouseup="mouseUp"
         >下一步
       </el-button>
     </div>
