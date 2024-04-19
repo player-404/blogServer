@@ -78,15 +78,15 @@ const verifyStatus = ref(true);
 const focus = () => {
   emit('focus', 'focus');
 };
-const blur = (rule?: RegExp) => {
+const blur = () => {
   // 动画
   emit('blur', 'blur');
-  // 验证
-  verify(rule);
 };
 // 输入框input事件
-const input = (el: any) => {
+const input = (el: any, rule?: RegExp) => {
   emit('input', el.target.value, props.config?.name);
+  // 验证
+  verify(rule);
 };
 // 修改input type
 const changeIptType = () => {
@@ -123,10 +123,7 @@ const verify = (rule?: RegExp) => {
   }
   // 验证码验证
   if (props.config?.name === 'verifyCode') {
-    verifyStatus.value = (iptRule as (code?: string, iptCode?: string) => boolean)(
-      code.value,
-      model.value as string
-    );
+    verifyStatus.value = true;
     return;
   }
   //其他验证
@@ -148,9 +145,9 @@ defineExpose({
         :class="{ error: !verifyStatus }"
         :style="{ height: config?.height || '30px', width: config?.width ?? '100%' }"
         :type="iptType ?? 'text'"
-        @blur="blur(rule)"
+        @blur="blur"
         @focus="focus"
-        @input="input"
+        @input="input($event, rule)"
       />
       <!-- 显示密码的眼睛图标 -->
       <div v-if="config?.type === 'password'" class="show-pass" @click="changeIptType">

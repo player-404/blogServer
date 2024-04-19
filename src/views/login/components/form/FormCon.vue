@@ -15,9 +15,12 @@ import { useIptFocusStore } from '@/stores/iptFocus';
 import { useFormType } from '@/stores/formType';
 import { verifyForm } from '@/utils/iptVerify';
 import { useFormDataStore } from '@/stores/formData';
+import { signUp, signIn } from '../../../../api/loginApi';
+
 import { storeToRefs } from 'pinia';
 import { ref, type VNodeRef } from 'vue';
 import { ElNotification } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 // 表单配置
 const fig = defineProps<{
@@ -25,10 +28,12 @@ const fig = defineProps<{
 }>();
 // 表单类型
 const { status } = storeToRefs(useFormType());
-const { step } = storeToRefs(useFormDataStore());
+const { step, signUpFormData, signInformData } = storeToRefs(useFormDataStore());
 const { updateSignInData, updateSignUpData, updateStep } = useFormDataStore();
 // 输入框的 store
 const { focus, blur } = useIptFocusStore();
+// 路由
+const router = useRouter();
 // const { updateType } = useFormType();
 const iptRef = ref<VNodeRef[]>([]);
 // 输入框聚焦
@@ -58,11 +63,34 @@ const pre = () => {
 const next = () => {
   // 下一步  表单（输入项）的验证
   if (verifyForm(iptRef)) {
-    console.log('牛逼');
     // 下一步 切换表单
     if (step.value > 3) return;
     const steps = step.value + 1;
     updateStep(steps);
+
+    // 注册表单提交
+    if (step.value === 2) {
+      signUp(signUpFormData.value)
+        .then((data) => {
+          console.log('注册', data);
+          ElNotification({
+            title: '注册成功',
+            message: '跳转中...',
+            type: 'success'
+          });
+
+          // 注册完成跳转主页
+          router.push('/home');
+        })
+        .catch((err) => {
+          console.log('注册失败', err);
+          ElNotification({
+            title: '注册失败',
+            message: err.response.data.message,
+            type: 'error'
+          });
+        });
+    }
   } else {
     ElNotification({ title: '验证失败', message: '表单有误, 请检查你的输入项', type: 'error' });
   }
@@ -70,7 +98,26 @@ const next = () => {
 // 提交表单
 const submit = () => {
   if (verifyForm(iptRef)) {
-    console.log('牛逼');
+    /* 登录 */
+    signIn(signInformData.value.username as string, signInformData.value.password as string)
+      .then((data) => {
+        console.log('登录', data);
+        ElNotification({
+          title: '登录成功',
+          message: '跳转中...',
+          type: 'success'
+        });
+        // 登录完成跳转主页
+        router.push('/home');
+      })
+      .catch((err) => {
+        console.log('登录失败', err);
+        ElNotification({
+          title: '登录失败',
+          message: err.response.data.message,
+          type: 'error'
+        });
+      });
   } else {
     ElNotification({ title: '登录失败', message: '表单有误, 请检查你的输入项', type: 'error' });
   }

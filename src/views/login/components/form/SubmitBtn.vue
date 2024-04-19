@@ -17,6 +17,7 @@ const mouseUp = () => {
 };
 // 登录
 const submit = () => {
+  console.log(1);
   emit('submit');
 };
 // 注册上一步

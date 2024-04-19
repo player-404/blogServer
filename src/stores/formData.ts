@@ -31,7 +31,6 @@ export const useFormDataStore = defineStore('formData', () => {
   const updateStep = (val: number) => {
     step.value = val;
   };
-
   return {
     signInformData,
     signUpFormData,
@@ -41,3 +40,5 @@ export const useFormDataStore = defineStore('formData', () => {
     updateStep
   };
 });
+
+
