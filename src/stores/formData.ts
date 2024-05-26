@@ -40,5 +40,3 @@ export const useFormDataStore = defineStore('formData', () => {
     updateStep
   };
 });
-
-

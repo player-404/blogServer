@@ -11,11 +11,12 @@ import router from './router';
 // fontaswome icon
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEyeSlash, faBell } from '@fortawesome/free-regular-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const app = createApp(App);
 
-library.add(faEye, faEyeSlash);
+library.add(faEye, faEyeSlash, faMagnifyingGlass, faBell);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(createPinia());

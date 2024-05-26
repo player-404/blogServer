@@ -80,7 +80,7 @@ const next = () => {
           });
 
           // 注册完成跳转主页
-          router.push('/home');
+          router.push('/');
         })
         .catch((err) => {
           console.log('注册失败', err);
@@ -108,7 +108,7 @@ const submit = () => {
           type: 'success'
         });
         // 登录完成跳转主页
-        router.push('/home');
+        router.push('/');
       })
       .catch((err) => {
         console.log('登录失败', err);
