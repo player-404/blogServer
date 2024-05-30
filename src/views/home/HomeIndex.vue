@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Slider from '@/views/home/components/Slider.vue';
 import MyHead from '@/views/home/components/MyHead.vue';
+import MyTabs from '@/views/home/components/MyTabs.vue';
 </script>
 <template>
   <div class="container">
@@ -14,8 +15,14 @@ import MyHead from '@/views/home/components/MyHead.vue';
         <el-header>
           <MyHead />
         </el-header>
-        <el-main>
-          <RouterView />
+        <el-main clsss="main">
+          <!-- 标签页 -->
+          <MyTabs />
+          <RouterView v-slot="{ Component }">
+            <KeepAlive>
+              <component :is="Component" />
+            </KeepAlive>
+          </RouterView>
         </el-main>
       </el-container>
     </div>
@@ -45,6 +52,10 @@ import MyHead from '@/views/home/components/MyHead.vue';
       width: 100%;
       height: 100%;
     }
+  }
+  :deep(.el-main) {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

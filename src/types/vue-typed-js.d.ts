@@ -12,3 +12,9 @@ declare interface Menus {
 declare interface dataMenus {
   menus: Menus[];
 }
+
+declare interface Tab {
+  title?: string;
+  name?: string;
+  path?: string;
+}

@@ -2,12 +2,12 @@ import type { RouteRecordRaw } from 'vue-router';
 
 export const routes: RouteRecordRaw[] = [
   {
-    name: 'login',
+    name: 'loginIndex',
     path: '/login',
     component: () => import('@/views/login/loginIndex.vue')
   },
   {
-    name: 'home',
+    name: 'homeIndex',
     path: '/',
     component: () => import('@/views/home/HomeIndex.vue'),
     meta: {
@@ -16,29 +16,44 @@ export const routes: RouteRecordRaw[] = [
     redirect: { path: '/index' },
     children: [
       {
-        name: 'index',
+        name: 'dashboardIndex',
         path: '/index',
-        component: () => import('@/views/dashboard/DashboardIndex.vue')
+        component: () => import('@/views/dashboard/DashboardIndex.vue'),
+        meta: {
+          title: '首页'
+        }
       },
       {
-        name: 'user',
+        name: 'userSystem',
         path: '/user',
-        component: () => import('@/views/systemUser/UserSystem.vue')
+        component: () => import('@/views/systemUser/UserSystem.vue'),
+        meta: {
+          title: '用户管理'
+        }
       },
       {
-        name: 'role',
+        name: 'roleSystem',
         path: '/role',
-        component: () => import('@/views/systemRole/RoleSystem.vue')
+        component: () => import('@/views/systemRole/RoleSystem.vue'),
+        meta: {
+          title: '角色管理'
+        }
       },
       {
-        name: 'menu',
+        name: 'menuSystem',
         path: '/menu',
-        component: () => import('@/views/systemMenu/MenuSystem.vue')
+        component: () => import('@/views/systemMenu/MenuSystem.vue'),
+        meta: {
+          title: '菜单管理'
+        }
       },
       {
-        name: 'star',
+        name: 'webNav',
         path: '/star',
-        component: () => import('@/views/webNav/WebNav.vue')
+        component: () => import('@/views/webNav/WebNav.vue'),
+        meta: {
+          title: '网页收藏'
+        }
       }
     ]
   }

@@ -8,7 +8,6 @@ export const useHomeStore = defineStore('sliderMenus', () => {
   const sliderMenus = ref<Menus[]>([]);
   const getUserMenus = async () => {
     const data: AxiosResponse<dataMenus> = await getMenus();
-
     sliderMenus.value = data.data.menus ? arrayToTree(data.data.menus, undefined) : [];
   };
 
