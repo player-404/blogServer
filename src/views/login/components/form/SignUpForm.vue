@@ -3,6 +3,7 @@ import { signUpInfoConfig, signUpPhoneConfig } from '../config/formConfig';
 import FormCon from './FormCon.vue';
 import { useFormDataStore } from '@/stores/formData';
 import { storeToRefs } from 'pinia';
+import ErrorTip from './ErrorTip.vue';
 import { ref } from 'vue';
 
 const { step } = storeToRefs(useFormDataStore());
@@ -28,6 +29,9 @@ const signInStatus = ref(false);
         <FormCon v-if="step === 0" :config="signUpInfoConfig"></FormCon>
         <!-- 手机号码 -->
         <FormCon v-else-if="step === 1" :config="signUpPhoneConfig"></FormCon>
+        <!-- 登录失败提示 -->
+        <ErrorTip v-else-if="step === -1" />
+        <!-- 登录成功提示 -->
         <div v-else class="status">
           <Transition>
             <div

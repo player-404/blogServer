@@ -1,7 +1,7 @@
 // fontaswome icon
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faEye, faEyeSlash, faBell } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEyeSlash, faBell, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import {
   faMagnifyingGlass,
   faPlus,
@@ -18,7 +18,9 @@ library.add(
   faPlus,
   faTrash,
   faFileImport,
-  faFileExport
+  faFileExport,
+  faMagnifyingGlass,
+  faPenToSquare
 );
 
 export default FontAwesomeIcon;

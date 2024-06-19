@@ -1,17 +1,3 @@
-export interface SignIn {
-  title?: string;
-  username?: boolean;
-  pass?: boolean;
-  confirmPass?: boolean;
-  phone?: boolean;
-  showHead?: boolean;
-}
-
-interface Ipt extends SignIn {
-  type?: string;
-  name?: string;
-}
-
 // 登录总表单配置
 export const signInConfig: SignIn = {
   title: '登录',
@@ -58,6 +44,6 @@ export const phoneConfig: Ipt = {
 };
 // 验证码输入框配置
 export const verifyCodeConfig: Ipt = {
-  name: 'verifyCode',
+  name: 'code',
   title: '验证码'
 };

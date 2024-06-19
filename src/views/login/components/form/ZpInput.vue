@@ -56,7 +56,7 @@ const defaultRules: Record<string, Rule> = reactive({
     requiredErrorMessage: '请输入手机号',
     rule: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/
   },
-  verifyCode: {
+  code: {
     required: true,
     message: props.message ?? '验证码不正确',
     errTip: '',
@@ -105,6 +105,7 @@ const verify = (rule?: RegExp) => {
   }
   // 获取输入框验证规则，传递了自定义规则使用自定义规则，否则使用默认规则
   const iptRule = rule ?? defaultRules[props.config?.name].rule;
+
   // 没有添加规则不进行验证
   if (!iptRule) {
     verifyStatus.value = true;
@@ -122,7 +123,7 @@ const verify = (rule?: RegExp) => {
     return;
   }
   // 验证码验证
-  if (props.config?.name === 'verifyCode') {
+  if (props.config?.name === 'code') {
     verifyStatus.value = true;
     return;
   }

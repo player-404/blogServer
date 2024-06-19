@@ -6,7 +6,6 @@ import {
   confirmPassConfig,
   passIptConfig,
   phoneConfig,
-  type SignIn,
   userIptConfig,
   verifyCodeConfig
 } from '../config/formConfig';
@@ -16,12 +15,14 @@ import { useFormType } from '@/stores/formType';
 import { verifyForm } from '@/utils/iptVerify';
 import { useFormDataStore } from '@/stores/formData';
 import { signUp, signIn } from '../../../../api/loginApi';
-
 import { storeToRefs } from 'pinia';
 import { ref, type VNodeRef } from 'vue';
 import { ElNotification } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 
+// user store
+const userStore = useUserStore();
 // 表单配置
 const fig = defineProps<{
   config: SignIn;
@@ -70,20 +71,22 @@ const next = () => {
 
     // 注册表单提交
     if (step.value === 2) {
+      // 注册
       signUp(signUpFormData.value)
         .then((data) => {
           console.log('注册', data);
+          userStore.setSignUpUser(data.data.data);
           ElNotification({
             title: '注册成功',
             message: '跳转中...',
             type: 'success'
           });
-
           // 注册完成跳转主页
           router.push('/');
         })
         .catch((err) => {
           console.log('注册失败', err);
+          updateStep(-1);
           ElNotification({
             title: '注册失败',
             message: err.response.data.message,
@@ -101,7 +104,8 @@ const submit = () => {
     /* 登录 */
     signIn(signInformData.value.username as string, signInformData.value.password as string)
       .then((data) => {
-        console.log('登录', data);
+        console.log('登录', data.data.data);
+        userStore.setSignInUser(data.data.data);
         ElNotification({
           title: '登录成功',
           message: '跳转中...',

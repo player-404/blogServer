@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const active = ref('onLine');
+defineProps(['modelValue']);
+const emit = defineEmits(['update:modelValue']);
 const onLineClick = () => {
-  active.value = 'onLine';
+  emit('update:modelValue', 'onLine');
 };
 const offLineClick = () => {
-  active.value = 'offLine';
+  emit('update:modelValue', 'offLine');
 };
 </script>
 <template>
@@ -14,7 +13,7 @@ const offLineClick = () => {
     <el-button
       size="large"
       class="on-line"
-      :class="{ active: active === 'onLine' }"
+      :class="{ active: modelValue === 'onLine' }"
       @click="onLineClick"
       color="#eff2f3"
       >在线用户</el-button
@@ -22,7 +21,7 @@ const offLineClick = () => {
     <el-button
       size="large"
       class="off-line"
-      :class="{ active: active === 'offLine' }"
+      :class="{ active: modelValue === 'offLine' }"
       @click="offLineClick"
       color="#eff2f3"
       >失效用户</el-button

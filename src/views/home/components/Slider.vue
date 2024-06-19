@@ -4,14 +4,14 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const homeStore = useHomeStore();
-await homeStore.getUserMenus().catch((err) => {
+await homeStore.getUserMenu().catch((err) => {
   console.log('发生错误', err.message);
 });
 </script>
 <template>
   <el-row>
     <el-col :span="24" class="menu-con">
-      <h5 class="mb-2 slider-title">刘刘的后台</h5>
+      <h5 class="mb-2 slider-title">TelStar</h5>
       <el-menu
         :unique-opened="true"
         active-text-color="#272727"
