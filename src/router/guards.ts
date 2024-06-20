@@ -6,6 +6,7 @@ export const globalGuards = (router: Router) => {
   router.beforeEach((to, from, next) => {
     // 路由验证权限
     if (!to.meta.requiresAuth) return next();
+
     if (Cookies.get('jwt')) {
       next();
     } else {
