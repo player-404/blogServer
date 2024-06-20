@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const url: string = import.meta.env.VITE_BASE_URL;
 
 const instance = axios.create({
-  baseURL: 'http://47.100.1.135:9999/api/v1/api',
+  baseURL: 'http://47.100.1.135:9999/v1/api',
   timeout: 1000,
   withCredentials: true
 });
